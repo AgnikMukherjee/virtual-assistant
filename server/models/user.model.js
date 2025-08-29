@@ -17,7 +17,6 @@ const userSchema = new mongoose.Schema(
         },
         assistantName: {
             type: String,
-            required: true
         },
         assistantImage: {
             type: String
