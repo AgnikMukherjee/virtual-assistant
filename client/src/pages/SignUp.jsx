@@ -54,8 +54,11 @@ const SignUp = () => {
       <form onSubmit={handleSubmit(handleSignUp)}
         className='rounded-lg w-[90%] h-[600px] max-w-[600px] bg-[#00000030] backdrop-blur shadow-lg drop-shadow-black flex flex-col items-center justify-center gap-3'>
 
-        <h1 className="text-2xl text-secondary mb-4">Welcome to your <span className="text-primary">virtual assistant</span></h1>
-
+        <h1 className="text-2xl text-center text-secondary mb-4">Welcome to your
+          <span className="hidden md:inline"> </span>
+          <br className="md:hidden" />
+          <span className="text-primary">virtual assistant</span>
+        </h1>
         <Input placeholder="Name" type={"string"} {...register("name", { required: true })} className={"max-w-4/5 text-secondary/90"} />
         {errors.name && <p className="text-destructive">Please enter your name</p>}
 
@@ -77,7 +80,7 @@ const SignUp = () => {
             {showPassword ? <IoMdEyeOff size={20} /> : <IoMdEye size={20} />}
           </span>
         </div>
-        {errors.password.message ? (<p className="text-destructive">{errors.password.message}</p>) : (<p className="text-destructive">Please create a password</p>) }
+        {errors.password.message ? (<p className="text-destructive">{errors.password.message}</p>) : (<p className="text-destructive">Please create a password</p>)}
 
 
         <Button disabled={isSubmitting} type="submit" variant={"default"} className={"cursor-pointer my-2"} >{isSubmitting ? "Signing Up..." : "Sign Up"}</Button>
