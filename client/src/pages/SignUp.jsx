@@ -3,10 +3,11 @@ import signing from '../assets/images/signing.avif'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import {useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userDataContext } from "../context/UserContext";
 import axios from "axios";
+import { toast, Toaster } from "sonner"
 
 const SignUp = () => {
 
@@ -24,17 +25,19 @@ const SignUp = () => {
 
 
   const handleSignUp = async (data) => {
-        console.log("Form submitting with:", data); // debug
-        console.log("Server URL:", serverUrl);
+    console.log("Form submitting with:", data); // debug
+    console.log("Server URL:", serverUrl);
 
     try {
-      const result =await axios.post(`${serverUrl}/api/auth/signup`, data, {withCredentials: true })
+      const result = await axios.post(`${serverUrl}/api/auth/signup`, data, { withCredentials: true })
 
       navigate("/")
-      return result.data;
       console.log(result)
+      toast.success("Account created successfully")
+      // return result.data;
     } catch (error) {
       console.log(error)
+      toast.error(error.response.data)
     }
   }
 
@@ -54,10 +57,10 @@ const SignUp = () => {
         <h1 className="text-2xl text-secondary mb-4">Welcome to your <span className="text-primary">virtual assistant</span></h1>
 
         <Input placeholder="Name" type={"string"} {...register("name", { required: true })} className={"max-w-4/5 text-secondary/90"} />
-        {errors.name && <p className="text-destructive">{errors.name.message}</p>}
+        {errors.name && <p className="text-destructive">Please enter your name</p>}
 
-        <Input placeholder="Email" type={"email"} {...register("email", { required: true})} className={"max-w-4/5 text-secondary/90"} />
-        {errors.email && <p className="text-destructive">{errors.email.message}</p>}
+        <Input placeholder="Email" type={"email"} {...register("email", { required: true })} className={"max-w-4/5 text-secondary/90"} />
+        {errors.email && <p className="text-destructive">Please enter your email</p>}
 
         <div className="relative w-full max-w-4/5">
           <Input
@@ -73,12 +76,8 @@ const SignUp = () => {
           >
             {showPassword ? <IoMdEyeOff size={20} /> : <IoMdEye size={20} />}
           </span>
-
-          {errors.password && (
-            <p className="text-destructive">{errors.password.message}</p>
-          )}
         </div>
-        {errors.password && <p className="text-destructive">{errors.password.message}</p>}
+        {errors.password.message ? (<p className="text-destructive">{errors.password.message}</p>) : (<p className="text-destructive">Please create a password</p>) }
 
 
         <Button disabled={isSubmitting} type="submit" variant={"default"} className={"cursor-pointer my-2"} >{isSubmitting ? "Signing Up..." : "Sign Up"}</Button>
