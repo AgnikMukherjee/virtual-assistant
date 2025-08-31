@@ -1,0 +1,43 @@
+import uploadCloudinary from "../config/cloudinary.js"
+import User from "../models/user.model.js"
+
+export const getCurrentUser = async (req, res) => {
+    try {
+        const userId = req.userId
+        const user = await User.findById(userId).select('-password')
+        if(!user){
+            return res.status(400).json({message: "User not found"})
+        }
+        return res.status(200).json(user)
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({message: `getCurrentUser error: ${error.message}`})
+    }
+}
+
+export const updateAssistant= async (req, res) =>{
+    try {
+        const {assistantName, imageUrl} = req.body //for preloaded images in client
+
+        let assistantImage = "";
+
+        if(req.file){
+            assistantImage = await uploadCloudinary(req.file.path) // for input image from user
+        }else{
+            assistantImage = imageUrl // if user chooses pre loaded image
+        }
+
+        const user= await User.findByIdAndUpdate(req.userId, {
+            assistantName,
+            assistantImage
+        }, {
+            new: true
+        }).select('-password')
+        
+        return res.status(200).json(user)
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({message: `updateAssistant error: ${error.message}`})
+    }
+}

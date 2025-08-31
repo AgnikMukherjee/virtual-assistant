@@ -22,7 +22,11 @@ const Card = ({image}) => {
             onMouseLeave={() => setTilt({ x: 0, y: 0 })}
             style={{ transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` }}
 
-            onClick={()=>setSelectedImage(image)}
+            onClick={()=>{
+                setSelectedImage(image)
+                setFrontendImage(null)
+                setBackendImage(null)
+            }}
         >
             <img src={image} className="w-full h-full object-cover"
             />

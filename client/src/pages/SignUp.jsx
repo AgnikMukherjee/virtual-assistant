@@ -1,4 +1,4 @@
-import { set, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import signing from '../assets/images/signing.avif'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -83,7 +83,7 @@ const SignUp = () => {
             {showPassword ? <IoMdEyeOff size={20} /> : <IoMdEye size={20} />}
           </span>
         </div>
-        {errors.password.message ? (<p className="text-destructive">{errors.password.message}</p>) : (<p className="text-destructive">Please create a password</p>)}
+        {errors.password?.message ? (<p className="text-destructive">{errors.password.message}</p>) : (<p className="text-destructive">Please create a password</p>)}
 
 
         <Button disabled={isSubmitting} type="submit" variant={"default"} className={"cursor-pointer my-2"} >{isSubmitting ? "Signing Up..." : "Sign Up"}</Button>
