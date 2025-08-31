@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form"
+import { set, useForm } from "react-hook-form"
 import signing from '../assets/images/signing.avif'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,7 +11,7 @@ import { toast, Toaster } from "sonner"
 
 const SignIn = () => {
 
-  const { serverUrl } = useContext(userDataContext)
+  const { serverUrl,userData, setUserData } = useContext(userDataContext)
   const navigate = useNavigate()
 
   const {
@@ -31,12 +31,15 @@ const SignIn = () => {
     try {
       const result = await axios.post(`${serverUrl}/api/auth/login`, data, { withCredentials: true })
 
+      setUserData(result.data)
+      console.log(result.data)
+
       navigate("/")
-      console.log(result)
       toast.success("Signed in successfully")
       // return result.data;
     } catch (error) {
       console.log(error)
+      setUserData(null)
       toast.error(error.response.data)
     }
   }

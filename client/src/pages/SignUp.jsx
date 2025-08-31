@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form"
+import { set, useForm } from "react-hook-form"
 import signing from '../assets/images/signing.avif'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,7 +11,7 @@ import { toast, Toaster } from "sonner"
 
 const SignUp = () => {
 
-  const { serverUrl } = useContext(userDataContext)
+  const { serverUrl, userData, setUserData } = useContext(userDataContext)
   const navigate = useNavigate()
 
   const {
@@ -31,12 +31,15 @@ const SignUp = () => {
     try {
       const result = await axios.post(`${serverUrl}/api/auth/signup`, data, { withCredentials: true })
 
-      navigate("/")
-      console.log(result)
+      setUserData(result.data)
+      console.log(result.data)
+
+      navigate("/customize")
       toast.success("Account created successfully")
       // return result.data;
     } catch (error) {
       console.log(error)
+      setUserData(null)
       toast.error(error.response.data)
     }
   }
