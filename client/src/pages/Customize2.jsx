@@ -24,15 +24,16 @@ const Customize2 = () => {
             let formData = new FormData()
             formData.append('assistantName', assistantName)
             if(backendImage){
-                formData.append('assistantImage', backendImage)
+                formData.append("assistantImage", backendImage)
             }else{
-                formData.append('imageUrl', selectedImage)
+                formData.append("imageUrl", selectedImage)
             }
 
             const result = await axios.put(`${serverUrl}/api/user/update`, formData, { withCredentials: true })
 
             console.log(result.data)
             setUserData(result.data)
+            navigate("/")
         } catch (error) {
             console.log(error);
         }
@@ -51,7 +52,6 @@ const Customize2 = () => {
             <div className='my-4'>
             {assistantName && <Button disabled={isSubmitting} variant="secondary" className={'rounded-full w-[70px] cursor-pointer'}
                 onClick={() => {
-                    navigate("/")
                     handleUpdateAssitant()
                     }} >
                 {isSubmitting ? "Creating..." : "Create"} </Button>}

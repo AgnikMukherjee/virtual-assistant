@@ -17,6 +17,13 @@ const App = () => {
       <Route path='/customize-img' element={ userData ?<Customize /> : <Navigate to={"/signup"} />} />
       <Route path='/customize-name' element={ userData ?<Customize2 /> : <Navigate to={"/signup"} />} />
 
+      {/* for testing */}
+      {/* <Route path='/'element={<Home/>} />
+      <Route path='/signup' element={<SignUp />} />
+      <Route path='/signin' element={  <SignIn /> } />
+      <Route path='/customize-img' element={<Customize /> } />
+      <Route path='/customize-name' element={ <Customize2 /> } /> */}
+
     </Routes>
   )
 }
